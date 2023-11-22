@@ -4,8 +4,6 @@ Made for Raspberry Pi 4 with Sensirion SEN44 sensor.
 
 **Connection: UART**
 
-**SEN44 Driver:** [Sensirion](https://github.com/Sensirion/raspberry-pi-uart-sen44) by [Björn Muntwyler](https://github.com/MBjoern), [Raphael Nestler](https://github.com/rnestler)
-
 ## sen44.py module example usage
 ```py
 from sen44 import SEN44
@@ -24,5 +22,7 @@ for _ in range(10):
 
 sensor.stop()
 ```
+
+SEN44 Driver: [Sensirion](https://github.com/Sensirion/raspberry-pi-uart-sen44)
 
 *This is a work in progress.*
