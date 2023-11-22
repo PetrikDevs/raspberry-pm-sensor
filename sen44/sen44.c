@@ -10,17 +10,6 @@ int start(void);
 void sleep(int);
 int stop(void);
 
-int main(void)
-{
-	printf("Hello, World!\n");
-	init();
-	reset();
-	start();
-	sleep(5000);
-	stop();
-	printf("Done.\n");
-}
-
 int init(void)
 {
 	return sensirion_uart_hal_init();
