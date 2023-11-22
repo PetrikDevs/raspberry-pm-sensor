@@ -42,7 +42,16 @@ class SEN44:
         sen44.measure( ptr(pm1p0), ptr(pm2p5), ptr(pm4p0), ptr(pm10p0), ptr(voc_index), ptr(ambient_humidity), ptr(ambient_temp) )
 
         return Measurement(pm1p0.value, pm2p5.value, pm4p0.value, pm10p0.value, voc_index.value, ambient_humidity.value, ambient_temp.value)
-        
+    
+    def get_serial(self) -> str:
+        serial = ctypes.create_string_buffer(32)
+        sen44.get_serial(serial)
+        return serial.value.decode("utf-8")
+    
+    def get_version(self) -> str:
+        version = ctypes.create_string_buffer(32)
+        sen44.get_version(version)
+        return version.value.decode("utf-8")
 
     def stop(self) -> None:
         if sen44.stop() != 0:
