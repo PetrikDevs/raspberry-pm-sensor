@@ -40,6 +40,18 @@ int measure(int* masscon_pm1p0, int* masscon_pm2p5, int* masscon_pm4p0, int* mas
 	return (int)error;
 }
 
+int get_serial_number(char serial_number[32])
+{
+	int16_t error = sen44_get_serial_number((unsigned char)serial_number, (uint8_t)32);
+	return (int)error;
+}
+
+int get_version(int* firm_maj, int* firm_min, bool* debug, int* hard_maj, int* hard_min, int* pro_maj, int* pro_min)
+{
+	int16_t error = sen44_get_version(firm_maj, firm_min, debug, hard_maj, hard_min, pro_maj, pro_min);
+	return (int)error;
+}
+
 int stop()
 {
 	return sen44_stop_measurement();
