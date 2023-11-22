@@ -1,5 +1,6 @@
 import ctypes
 from ctypes import byref as ptr
+from time import sleep
 
 sen44 = ctypes.CDLL("./sensirion_sen44.so")
 
@@ -13,10 +14,13 @@ class SEN44:
             raise RuntimeError("SEN44 failed to initialize.")
 
         sen44.reset()
+        self.started = False
 
     def start(self) -> None:
         if sen44.start() != 0:
             raise RuntimeError("SEN44 failed to execute: start()")
+        sleep(1.5)  # Wait for actual start-up
+        self.started = True
 
     def sleep(self, ms: int) -> None:
         sen44.sleep(ms)
@@ -26,6 +30,8 @@ class SEN44:
             raise RuntimeError("SEN44 failed to execute: reset()")
 
     def measure(self) -> Measurement:
+        if not self.started:
+            raise RuntimeError("SEN44 attempted measurement before start")
         pm1p0 = ctypes.c_int()
         pm2p5 = ctypes.c_int()
         pm4p0 = ctypes.c_int()
@@ -41,15 +47,5 @@ class SEN44:
     def stop(self) -> None:
         if sen44.stop() != 0:
             raise RuntimeError("SEN44 failed to execute: stop()")
-
-if __name__ == "__main__":
-    sn = SEN44()
-    from time import sleep
-    sn.reset()
-    sn.start()
-    for i in range(5):
-        mes = sn.measure()
-        print(f"Temperature: {mes.ambient_temp}\nHumidity: {mes.ambient_humidity}\npm10p0: {mes.pm10p0}\n")
-        sleep(3)
-    sn.stop()
+        self.started = False
 
