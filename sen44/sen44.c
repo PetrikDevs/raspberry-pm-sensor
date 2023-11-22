@@ -33,8 +33,8 @@ void sleep(int ms)
 int measure(int* masscon_pm1p0, int* masscon_pm2p5, int* masscon_pm4p0, int* masscon_pm10p0, float* voc_index, float* ambient_humidity, float* ambient_temp)
 {
 	int16_t error = sen44_read_measured_mass_concentration_and_ambient_values(
-		&masscon_pm1p0, &masscon_pm2p5, &masscon_pm4p0, &masscon_pm10p0,
-		&voc_index, &ambient_humidity, &ambient_temp
+		(uint16_t*)masscon_pm1p0, (uint16_t*)masscon_pm2p5, (uint16_t*)masscon_pm4p0, (uint16_t*)masscon_pm10p0,
+		voc_index, ambient_humidity, ambient_temp
 	);
 
 	return (int)error;
