@@ -1,10 +1,12 @@
 # raspberry-pm-sensor
+
 Standalone particulate matter measuring station.
 Made for Raspberry Pi 4 with Sensirion SEN44 sensor.
 
 **Connection: UART**
 
 ## sen44.py module example usage
+
 ```py
 from sen44 import SEN44
 
