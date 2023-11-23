@@ -7,8 +7,8 @@ from time import sleep
 import os
 
 # Global constants
-PREP_TIME = 10  # Spin the fan for x ms before taking the measurement values
-MEASUREMENT_PERIOD = 50  # Measurement period in ms
+PREP_TIME = 10  # Spin the fan for x seconds before taking the measurement values
+MEASUREMENT_PERIOD = 50  # Measurement period in seconds
 sensor = SEN44()
 
 sensor.reset()
@@ -22,8 +22,12 @@ print(f"Sensor info:\nFirmware: { version.firmware_major }.{ version.firmware_mi
 if not os.path.exists("./measurements"):
     os.mkdir("./measurements")
 
-def now() -> str: return datetime.now().strftime("%Y.%m.%d %H:%M:%S")
+def now() -> str: return datetime.now().strftime("%Y.%m.%d.;%H:%M:%S")
 def now_file() -> str: return datetime.now().strftime("%Y.%m.%d_%H-%M-%S")
+
+# Function to change float value's decimal point to comma
+def comma(n: float) -> str:
+	return str(n).replace('.', ',')
 
 # Measurement
 def take_measurement() -> str:
@@ -33,7 +37,7 @@ def take_measurement() -> str:
 
 	# TODO: send measurement values to server
 
-	raw = f"{ now() };{ measurement.pm2p5 };{ measurement.pm10p0 };{ measurement.ambient_humidity };{ measurement.ambient_temp }"
+	raw = f"{ now() };{ comma(measurement.pm2p5) };{ comma(measurement.pm10p0) };{ comma(measurement.ambient_humidity) }%;{ comma(measurement.ambient_temp) }°C"
 
 	return raw
 
@@ -41,7 +45,7 @@ filename = f"./measurements/{ now_file() }.csv"
 
 with open(filename, "w") as f:
     print(f"Starting measurement. Saving to { filename }")
-    f.write("timestamp;pm2.5;pm10;humidity;temperature\n")
+    f.write("date;time;pm2.5;pm10;humidity;temperature\n")
     while True:
         sleep(MEASUREMENT_PERIOD)
         mes = take_measurement()
