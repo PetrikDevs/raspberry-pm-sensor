@@ -22,12 +22,8 @@ print(f"Sensor info:\nFirmware: { version.firmware_major }.{ version.firmware_mi
 if not os.path.exists("./measurements"):
     os.mkdir("./measurements")
 
-def now() -> str: return datetime.now().strftime("%Y.%m.%d.;%H:%M:%S")
+def now() -> str: return datetime.now().strftime("%Y/%m/%d;%H:%M:%S")
 def now_file() -> str: return datetime.now().strftime("%Y.%m.%d_%H-%M-%S")
-
-# Function to change float value's decimal point to comma
-def comma(n: float) -> str:
-	return str(n).replace('.', ',')
 
 # Measurement
 def take_measurement() -> str:
@@ -37,7 +33,7 @@ def take_measurement() -> str:
 
 	# TODO: send measurement values to server
 
-	raw = f"{ now() };{ comma(measurement.pm2p5) };{ comma(measurement.pm10p0) };{ comma(measurement.ambient_humidity) }%;{ comma(measurement.ambient_temp) }°C"
+	raw = f"{ now() },{ measurement.pm2p5 },{ measurement.pm10p0 },{ measurement.ambient_humidity }%,{ measurement.ambient_temp }"
 
 	return raw
 
