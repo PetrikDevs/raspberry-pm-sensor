@@ -24,7 +24,6 @@ class SEN44:
     def start(self) -> None:
         if sen44.start() != 0:
             raise RuntimeError("SEN44 failed to execute: start()")
-        sleep(1.5)  # Wait for actual start-up
         self.started = True
 
     def sleep(self, ms: int) -> None:
