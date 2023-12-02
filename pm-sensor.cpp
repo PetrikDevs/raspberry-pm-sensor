@@ -32,6 +32,7 @@ std::string get_time_file() {
 	std::stringstream ss;
 	ss << std::put_time(std::localtime(&in_time_t), "%H-%M-%S");
 	return ss.str();
+}
 
 void checkerr(uint8_t err, const char* msg) {
 	if (err != 0) {
